@@ -1,0 +1,5 @@
+
+1 = rev | chop "8 16 6"
+  | every 2 (rev) | n "0 2 [7 8]"
+
+2 = jux (rev) | n "0 1 2"
