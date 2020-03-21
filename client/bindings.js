@@ -1,17 +1,25 @@
 const helpers = require('./helpers')
 
-exports.n = pattern => ({ type: 'notes', pattern })
+exports.n = n
+function n (pattern) {
+  return { type: 'notes', pattern }
+}
 
-exports.cc = (controller, pattern) => ({ type: 'cc', controller, pattern })
+exports.cc = cc
+function cc (controller, pattern) {
+  return { type: 'cc', controller, pattern }
+}
 
-exports.rev = pattern => {
+exports.rev = rev
+function rev (pattern) {
   return helpers.modifyObj(pattern, pattern => {
     pattern.values[0] = helpers.reverseArray(pattern.values[0])
     pattern.values[1] = helpers.reverseArray(pattern.values[1])
   })
 }
 
-exports.jux = (f, pattern) => {
+exports.jux = jux
+function jux (f, pattern) {
   const clone = f(helpers.cloneObj(pattern))
   return helpers.modifyObj(pattern, pattern => {
     pattern.values[0] = pattern.values[0]
@@ -19,7 +27,8 @@ exports.jux = (f, pattern) => {
   })
 }
 
-exports.every = (n, f, pattern) => {
+exports.every = every
+function every (n, f, pattern) {
   const clone = f(helpers.cloneObj(pattern))
   return helpers.modifyObj(pattern, pattern => {
     pattern.values[0] = helpers.repeatArray(n - 1, pattern.values[0]).concat(clone.values[0])
@@ -28,5 +37,8 @@ exports.every = (n, f, pattern) => {
   })
 }
 
-// TODO
-exports.chop = (ns, pattern) => pattern
+exports.chop = chop
+function chop (ns, pattern) {
+  // TODO
+  return pattern
+}
