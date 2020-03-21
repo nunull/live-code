@@ -1,11 +1,9 @@
 exports.reverseArray = reverseArray
-
 function reverseArray (a) {
   return a.slice().reverse().map(i => Array.isArray(i) ? reverseArray(i) : i)
 }
 
 exports.repeatArray = repeatArray
-
 function repeatArray (n, a) {
     let result = []
     for (let i = 0; i < n; i++) result = result.concat(a)
@@ -13,7 +11,6 @@ function repeatArray (n, a) {
 }
 
 exports.cloneObj = cloneObj
-
 function cloneObj (obj) {
   const result = {}
   for (const key in obj) {
@@ -26,7 +23,6 @@ function cloneObj (obj) {
 }
 
 exports.cloneArray = cloneArray
-
 function cloneArray (a) {
   const result = []
   for (const item of a) {
@@ -36,9 +32,9 @@ function cloneArray (a) {
 }
 
 exports.modifyObj = modifyObj
-
 function modifyObj (obj, f) {
-  const clone = obj.clone()
+  // const clone = obj.clone()
+  const clone = cloneObj(obj)
   f(clone)
   return clone
 }

@@ -1,5 +1,3 @@
-const Pattern = require('../common/pattern')
-
 module.exports = function exec (ast, bindings) {
   const scope = {}
 
@@ -39,20 +37,25 @@ function execPipedExpression (pipedExpression, bindings) {
   return previousResult
 }
 
+function execPattern (pattern) {
+  return {
+    values: [pattern, pattern],
+    cycles: 1,
+    toString () {
+      const values = this.values.map(values => `\n  ${JSON.stringify(values)}`)
+      return `pattern (${this.cycles})${values}`
+    }
+  }
+}
+
 function execFunctionCall (name, params, bindings) {
   const paramValues = []
   for (const param of params) {
-    if (param.type === 'value') {
-      paramValues.push(param.value)
-    } else if (param.type === 'pattern') {
-      paramValues.push(new Pattern(param.value))
-    } else if (param.type === 'functionCall') {
-      paramValues.push(execFunctionCall(param.name, param.params, bindings))
-    } else if (param.type === 'pipedExpression') {
-      paramValues.push(execPipedExpression(param, bindings))
-    } else {
-      throw execError(`unexpected "${param.type}" for param`)
-    }
+    if (param.type === 'value') paramValues.push(param.value)
+    else if (param.type === 'pattern') paramValues.push(execPattern(param.value))
+    else if (param.type === 'functionCall') paramValues.push(execFunctionCall(param.name, param.params, bindings))
+    else if (param.type === 'pipedExpression') paramValues.push(execPipedExpression(param, bindings))
+    else throw execError(`unexpected "${param.type}" for param`)
   }
 
   const f = bindings[name]
