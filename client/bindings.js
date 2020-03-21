@@ -2,12 +2,26 @@ const helpers = require('./helpers')
 
 exports.n = n
 function n (pattern) {
-  return { type: 'notes', pattern }
+  return { type: 'notes', octave: 3, pattern }
 }
 
 exports.cc = cc
 function cc (controller, pattern) {
   return { type: 'cc', controller, pattern }
+}
+
+exports.fast = fast
+function fast (n, pattern) {
+  return helpers.modifyObj(pattern, pattern => {
+    pattern.cycles = pattern.cycles * (1 / n)
+  })
+}
+
+exports.slow = slow
+function slow (n, pattern) {
+  return helpers.modifyObj(pattern, pattern => {
+    pattern.cycles = pattern.cycles * n
+  })
 }
 
 exports.rev = rev

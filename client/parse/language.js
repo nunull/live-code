@@ -8,6 +8,7 @@ function pattern (tokens) {
   return helpers.many(tokens, tokens => {
     let [err, token] = helpers.optional(tokens, tokens => base.number(tokens))
     if (err) [err, token] = helpers.optional(tokens, tokens => base.identifier(tokens))
+    if (err) [err, token] = helpers.optional(tokens, tokens => base.literal(tokens, '-'))
     if (err) {
       return helpers.surroundedBy(tokens, '[', ']', tokens => pattern(tokens))
     }

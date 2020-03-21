@@ -8,5 +8,8 @@
   },
   "devDependencies": {
     "jest": "^25.1.0"
+  },
+  "dependencies": {
+    "easymidi": "^1.0.3"
   }
 }

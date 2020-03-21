@@ -1,7 +1,7 @@
 module.exports = tokenize
 
 function tokenize (input) {
-  const controlChars = [' ', '"', '[', ']', '|', '(', ')', '=', '\n']
+  const controlChars = [' ', '"', '[', ']', '|', '(', ')', '=', '\n', '-']
 
   const tokens = []
   let buffer = ''
