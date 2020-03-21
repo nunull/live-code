@@ -1,3 +1,5 @@
+const { reverseArray, repeatArray, cloneObj, cloneArray, modifyObj } = require('../common/helpers')
+
 module.exports = Pattern
 
 function Pattern (value, cycles = 1, category = "notes") {
@@ -16,13 +18,12 @@ Pattern.prototype.clone = function () {
 }
 
 Pattern.prototype.modify = function (f) {
-  const clone = this.clone()
-  f(clone)
-  return clone
+  return modifyObj(this, f)
 }
 
 Pattern.prototype.toString = function () {
-  return `pattern (${this.cycles})\n  ${JSON.stringify(this.values[0])}\n  ${JSON.stringify(this.values[1])}`
+  const values = this.values.map(values => `\n  ${JSON.stringify(values)}`)
+  return `pattern (${this.cycles})${values}`
 }
 
 Pattern.prototype.rev = function () {
@@ -45,34 +46,6 @@ Pattern.prototype.every = function (n, f) {
   return this.modify(pattern => {
     pattern.values[0] = repeatArray(n - 1, pattern.values[0]).concat(clone.values[0])
     pattern.values[1] = repeatArray(n - 1, pattern.values[1]).concat(clone.values[1])
+    pattern.cycles *= n
   })
-}
-
-function reverseArray (a) {
-  return a.slice().reverse().map(i => Array.isArray(i) ? reverseArray(i) : i)
-}
-
-function repeatArray (n, a) {
-    let result = []
-    for (let i = 0; i <= n; i++) result = result.concat(a)
-    return result
-}
-
-function cloneObj (obj) {
-  const result = {}
-  for (const key in obj) {
-    const value = obj[key]
-    if (Array.isArray(value)) result[key] = cloneArray(value)
-    else if (typeof value === 'object') result[key] = cloneObj(value)
-    else result[key] = value
-  }
-  return result
-}
-
-function cloneArray (a) {
-  const result = []
-  for (const item of a) {
-    result.push(Array.isArray(item) ? cloneArray(item) : item)
-  }
-  return result
 }

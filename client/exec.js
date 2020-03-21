@@ -7,11 +7,19 @@ module.exports = function exec (ast, bindings) {
   for (const assignment of ast.value) {
     if (assignment.type !== 'assignment') throw execError(`expected assignment`)
 
-    const value = execPipedExpression(assignment.value, bindings)
+    const value = execPlusExpression(assignment.value, bindings)
     scope[assignment.id] = value
   }
 
   return scope
+}
+
+function execPlusExpression (plusExpression, bindings) {
+  if (plusExpression.type !== 'plusExpression') throw execError(`expected plusExpression`)
+
+  return plusExpression.value.map(pipedExpression =>
+    execPipedExpression(pipedExpression, bindings)
+  )
 }
 
 function execPipedExpression (pipedExpression, bindings) {

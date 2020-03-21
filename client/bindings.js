@@ -1,4 +1,6 @@
-exports.n = pattern => pattern
+exports.n = pattern => ({ type: 'notes', pattern })
+
+exports.cc = (controller, pattern) => ({ type: 'cc', controller, pattern })
 
 exports.rev = pattern => pattern.rev()
 
