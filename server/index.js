@@ -31,14 +31,11 @@ function handlePatterns (patterns) {
 
   for (const channel in patterns) {
     for (const p of patterns[channel]) {
-      // TODO p.pattern.values[1]
-      const values = p.pattern.values[0]
-
       const ticksPerCycle = 24 * 4
       const ticksPerPattern = ticksPerCycle * p.pattern.cycles
-      const ticksPerValue = ticksPerPattern / values.length
+      const ticksPerValue = ticksPerPattern / p.pattern.values.length
 
-      const ticks = getTicksForValues(values, ticksPerValue)
+      const ticks = getTicksForValues(p.pattern.values, ticksPerValue)
 
       const midiPattern = {
         ticks: p.pattern.cycles * ticksPerCycle

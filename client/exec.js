@@ -37,13 +37,12 @@ function execPipedExpression (pipedExpression, bindings) {
   return previousResult
 }
 
-function execPattern (pattern) {
+function execPattern (values) {
   return {
-    values: [pattern, pattern],
+    values,
     cycles: 1,
     toString () {
-      const values = this.values.map(values => `\n  ${JSON.stringify(values)}`)
-      return `pattern (${this.cycles})${values}`
+      return `pattern (${this.cycles}) ${JSON.stringify(this.values)}`
     }
   }
 }
