@@ -6,7 +6,7 @@ const parse = require('./parse')
 
 const serverAddress = process.env.SERVER_ADDRESS || 'http://localhost:3000'
 
-const code = fs.readFileSync('samples/test-01.lc', 'utf-8')
+const code = fs.readFileSync('samples/test-03.lc', 'utf-8')
 
 run(code, bindings)
 
