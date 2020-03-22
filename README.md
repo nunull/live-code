@@ -23,7 +23,8 @@ the input device and 'sync' for the output device. Close the settings and hit
 play.
 
 Watch for file changes to your script file and run the client on every file
-change.
+change. Keep the server running and execute the following command in a new
+shell session:
 
     $ watchmedo shell-command --command 'node client/index.js samples/<input>' samples
 
